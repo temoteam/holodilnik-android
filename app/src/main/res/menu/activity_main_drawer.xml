@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_recipe_list"
+            android:icon="@drawable/ic_menu_list"
+            android:title="Все рецепты" />
+        <item
+            android:id="@+id/nav_recipe_search"
+            android:icon="@drawable/ic_menu_search"
+            android:title="Поиск по продуктам" />
+
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Поделиться" />
+        </menu>
+    </item>
+
+</menu>
