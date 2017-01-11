@@ -45,7 +45,7 @@ public class SearchRecrclerAdapter extends RecyclerView.Adapter<SearchRecrclerAd
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.title.setText(titles.get(position));
-        Loader.loadIMG(titles.get(position),holder.pic,activity);
+        Loader.loadIMG(ids.get(position),titles.get(position),holder.pic,activity);
         // holder.cardView.setBackgroundColor(Color.parseColor("#CFF9B2"));
 
     }

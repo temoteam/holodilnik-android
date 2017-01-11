@@ -60,7 +60,7 @@ public class SearchGrildAdapter extends BaseAdapter {
             TextView textView = (TextView) grid.findViewById(R.id.title);
             textView.setText(titles.get(position));
             Log.i("Setting up",position+":"+titles.get(position));
-            Loader.loadIMG(titles.get(position),imageView,activity);
+            Loader.loadIMG(ids.get(position),titles.get(position),imageView,activity);
         } else {
             grid = (View) convertView;
         }
