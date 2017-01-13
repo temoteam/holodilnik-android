@@ -9,8 +9,12 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class SearchFragment extends Fragment implements TextWatcher {
@@ -20,6 +24,8 @@ public class SearchFragment extends Fragment implements TextWatcher {
     RecyclerView recyclerView;
     Loader loader;
 
+    Animation animation;
+
     public SearchFragment() {
 
     }
@@ -27,6 +33,7 @@ public class SearchFragment extends Fragment implements TextWatcher {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        animation = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate);
 
     }
 
@@ -39,6 +46,23 @@ public class SearchFragment extends Fragment implements TextWatcher {
         recyclerView = (RecyclerView) result.findViewById(R.id.recicler) ;
         search.addTextChangedListener(this);
         loader = new Loader(recyclerView,getActivity());
+        SearchRecrclerAdapter.setSelectedText((TextView) result.findViewById(R.id.selected));
+        ImageView cancel = (ImageView)result.findViewById(R.id.cancel);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SearchRecrclerAdapter.clear();
+                v.startAnimation(animation);
+            }
+        });
+        ImageView check = (ImageView)result.findViewById(R.id.check);
+        check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         return result;
     }
 
