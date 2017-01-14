@@ -15,48 +15,36 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
-public class SearchRecrclerAdapter extends RecyclerView.Adapter<SearchRecrclerAdapter.ViewHolder> {
+public class RecipesReciclerAdapter extends RecyclerView.Adapter<RecipesReciclerAdapter.ViewHolder> {
 
-    public static String reqId = "";
-    private static String reqText = "";
-    private static TextView selectedText = null;
 
-    public static void setSelectedText(TextView selectedText) {
-        SearchRecrclerAdapter.selectedText = selectedText;
-    }
-
-    public static void clear() {
-        reqId = "";
-        reqText = "";
-        selectedText.setText(reqText);
-    }
 
     private Activity activity;
+
     private ArrayList<String> ids;
     private ArrayList<String> titles;
+    private ArrayList<String> likes;
+    private ArrayList<String> time;
 
 
-
-
-
-
-
-    public SearchRecrclerAdapter(Activity activity) {
+    public RecipesReciclerAdapter(Activity activity) {
         this.activity = activity;
     }
 
-    public void init(ArrayList<String> titles,ArrayList<String> ids){
+    public void init(ArrayList<String> titles,ArrayList<String> ids,ArrayList<String> likes,ArrayList<String> time){
         this.titles = titles;
         this.ids = ids;
-
-
+        this.likes = likes;
+        this.time = time;
     }
 
     @Override
-    public SearchRecrclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recicler_search, parent, false);
+    public RecipesReciclerAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recicler_recipe, parent, false);
         return new ViewHolder(v);
     }
 
@@ -74,29 +62,12 @@ public class SearchRecrclerAdapter extends RecyclerView.Adapter<SearchRecrclerAd
                 this.id = id;
                 this.text = text;
                 this.cw = cw;
-                init();
             }
 
-            void init(){
-                if (reqId.contains(id+","))
-                    cw.setBackgroundColor(Color.parseColor("#E9FDCF"));
-                else
-                    cw.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                if (reqText.length()>0)
-                selectedText.setText(reqText.substring(0,reqText.length()-2));
-            }
 
             @Override
             public void onClick(View v) {
-                if (!reqId.contains(id+",")){
-                    reqId=reqId+id+",";
-                    reqText=reqText+text+", ";
-                }
-                else {
-                    reqId=reqId.replaceAll(id+",","");
-                    reqText=reqText.replaceAll(text+", ","");
-                }
-                init();
+
             }
 
             @Override
@@ -106,10 +77,10 @@ public class SearchRecrclerAdapter extends RecyclerView.Adapter<SearchRecrclerAd
         }
 
         holder.title.setText(titles.get(position));
+        holder.time.setText(time.get(position));
+        holder.likes.setText(likes.get(position));
         holder.cardView.setOnClickListener(new MyOnClicler(ids.get(position),titles.get(position),holder.cardView));
-        Loader.loadIMG(ids.get(position),titles.get(position),holder.pic,activity);
-        //
-
+        Picasso.with(activity).load("http://lohness.com/hlad/photo/recipe_"+ids.get(position)+".png").error(R.drawable.loading).into(holder.pic);
     }
 
     @Override
@@ -119,12 +90,17 @@ public class SearchRecrclerAdapter extends RecyclerView.Adapter<SearchRecrclerAd
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         TextView title;
+        TextView likes;
+        TextView time;
         ImageView pic;
         CardView cardView;
+
 
         ViewHolder(View v) {
             super(v);
             title = (TextView) v.findViewById(R.id.title);
+            likes = (TextView) v.findViewById(R.id.likes);
+            time = (TextView) v.findViewById(R.id.time);
             pic=(ImageView) v.findViewById(R.id.logo);
             cardView = (CardView) v.findViewById(R.id.cardView);
         }

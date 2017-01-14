@@ -17,6 +17,7 @@ import com.squareup.picasso.Picasso;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -78,10 +79,85 @@ public class Loader {
 
     }
 
+    public static class GetRecipes extends AsyncTask<Void,Void,Boolean>{
+
+        Activity activity;
+
+        String type;
+        String q;
+        String sort;
+        String desc;
+        RecyclerView rw;
+
+        ArrayList<String> titles;
+        ArrayList<String> times;
+        ArrayList<String> likes;
+        ArrayList<String> ids;
+
+        public GetRecipes(Activity activity,String type,String q,String sort,String desc,RecyclerView recyclerView){
+            this.type = type;
+            this.q = q;
+            this.sort = sort;
+            this.desc = desc;
+            this.rw = recyclerView;
+            this.activity = activity;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            try {
+                String myURL = "http://lohness.com/hlad/recipe_prediction.php";
+                String parms = "q=" + q + "&sort=" + sort + "&desc=" + desc + "&type=" + type;
+                byte[] data = null;
+                URL url = new URL(myURL);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setDoOutput(true);
+                conn.setDoInput(true);
+                conn.setRequestProperty("Content-Length", "" + Integer.toString(parms.getBytes().length));
+                OutputStream os = conn.getOutputStream();
+                data = parms.getBytes("UTF-8");
+                os.write(data);
+                data = null;
+                conn.connect();
+
+                Scanner in = new Scanner(conn.getInputStream());
+
+                titles = new ArrayList<String>();
+                ids = new ArrayList<String>();
+                times = new ArrayList<String>();
+                likes = new ArrayList<String>();
+
+                while (in.hasNextLine()){
+                    Scanner scan = new Scanner(in.nextLine());
+                    scan.useDelimiter("::");
+                    ids.add(scan.next());
+                    titles.add(scan.next());
+                    likes.add(scan.next());
+                    times.add(scan.next());
+                }
+
+                return true;
+            }
+                catch (Exception e){e.printStackTrace();
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aVoid) {
+            super.onPostExecute(aVoid);
+            if (aVoid){
+                Log.i("Getted",titles.size()+"");
+            RecipesReciclerAdapter rcp = new RecipesReciclerAdapter(activity);
+            rcp.init(titles,ids,likes,times);
+            rw.setLayoutManager(new LinearLayoutManager(activity));
+            rw.setAdapter(rcp);
+            }
+        }
+    }
+
     private class GetPrediction extends AsyncTask<String,Void,Boolean>{
-
-        //lol github kek
-
         ArrayList<String> titles;
         ArrayList<String> ids;
 

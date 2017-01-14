@@ -2,6 +2,8 @@ package org.temoteam.holodilnik;
 
 
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -25,6 +27,8 @@ public class SearchFragment extends Fragment implements TextWatcher {
     Loader loader;
 
     Animation animation;
+    FragmentManager fm;
+    RecipesFragment recipesFragment;
 
     public SearchFragment() {
 
@@ -34,20 +38,20 @@ public class SearchFragment extends Fragment implements TextWatcher {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         animation = AnimationUtils.loadAnimation(getActivity(), R.anim.rotate);
-
+        fm = getFragmentManager();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View result = inflater.inflate(R.layout.fragment_search, container, false);
-        search = (EditText)result.findViewById(R.id.editText_search);
+        search = (EditText) result.findViewById(R.id.editText_search);
         selected = (TextView) result.findViewById(R.id.textView_selected);
-        recyclerView = (RecyclerView) result.findViewById(R.id.recicler) ;
+        recyclerView = (RecyclerView) result.findViewById(R.id.recicler);
         search.addTextChangedListener(this);
-        loader = new Loader(recyclerView,getActivity());
+        loader = new Loader(recyclerView, getActivity());
         SearchRecrclerAdapter.setSelectedText((TextView) result.findViewById(R.id.selected));
-        ImageView cancel = (ImageView)result.findViewById(R.id.cancel);
+        ImageView cancel = (ImageView) result.findViewById(R.id.cancel);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,14 +59,20 @@ public class SearchFragment extends Fragment implements TextWatcher {
                 v.startAnimation(animation);
             }
         });
-        ImageView check = (ImageView)result.findViewById(R.id.check);
+        ImageView check = (ImageView) result.findViewById(R.id.check);
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FragmentTransaction transaction = fm.beginTransaction();
+                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                transaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_in_right);
+
+                if (recipesFragment == null) recipesFragment = new RecipesFragment();
+                recipesFragment.dataUpdate(SearchRecrclerAdapter.reqId,"id","likes","true");
+                transaction.replace(R.id.content_main, recipesFragment).commit();
 
             }
         });
-
         return result;
     }
 
