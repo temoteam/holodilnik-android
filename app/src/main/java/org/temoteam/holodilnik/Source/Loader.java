@@ -1,11 +1,10 @@
-package org.temoteam.holodilnik;
+package org.temoteam.holodilnik.Source;
 
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.GridView;
 import android.widget.ImageView;
 
 
@@ -13,19 +12,18 @@ import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 
+import org.temoteam.holodilnik.Adapters.RecipesReciclerAdapter;
+import org.temoteam.holodilnik.Adapters.SearchRecrclerAdapter;
+import org.temoteam.holodilnik.R;
 
-import java.io.BufferedReader;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 
 public class Loader {

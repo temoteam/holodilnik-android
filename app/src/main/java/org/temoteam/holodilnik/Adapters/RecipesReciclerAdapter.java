@@ -1,21 +1,21 @@
-package org.temoteam.holodilnik;
+package org.temoteam.holodilnik.Adapters;
 
 
 import android.app.Activity;
-import android.graphics.Color;
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 
 import com.squareup.picasso.Picasso;
+
+import org.temoteam.holodilnik.Main.RecipeActivity;
+import org.temoteam.holodilnik.R;
 
 import java.util.ArrayList;
 
@@ -55,19 +55,18 @@ public class RecipesReciclerAdapter extends RecyclerView.Adapter<RecipesRecicler
         class MyOnClicler implements View.OnClickListener,View.OnLongClickListener{
 
             String id;
-            String text;
             CardView cw;
 
             public MyOnClicler (String id,String text,CardView cw){
                 this.id = id;
-                this.text = text;
                 this.cw = cw;
             }
 
 
             @Override
             public void onClick(View v) {
-
+                RecipeActivity.updata(id);
+                activity.startActivity(new Intent(activity,RecipeActivity.class));
             }
 
             @Override
