@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import org.temoteam.holodilnik.Adapters.StepsReciclerAdapter;
 import org.temoteam.holodilnik.R;
 
 import java.io.OutputStream;
@@ -101,6 +103,7 @@ public class RecipeActivity extends AppCompatActivity {
                 links = new ArrayList<String>();
 
                 myURL = "http://lohness.com/hlad/steps/"+id;
+                url = new URL(myURL);
                 in = new Scanner(url.openConnection().getInputStream());
                 while (in.hasNextLine()){
                     String temp = in.nextLine();
@@ -129,6 +132,11 @@ public class RecipeActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            StepsReciclerAdapter sra = new StepsReciclerAdapter(recipeActivity);
+            sra.init(steps,links);
+            recipeActivity.steps.setLayoutManager(new LinearLayoutManager(recipeActivity));
+            recipeActivity.steps.setAdapter(sra);
+
         }
     }
 }
