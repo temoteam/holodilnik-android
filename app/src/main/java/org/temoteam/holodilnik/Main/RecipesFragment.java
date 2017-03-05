@@ -1,7 +1,9 @@
 package org.temoteam.holodilnik.Main;
 
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
@@ -88,6 +90,14 @@ public class RecipesFragment extends Fragment {
     public void update(){
         if(!(q.equals("")))
         new Loader.GetRecipes(getActivity(),type,q,sort,desc,rw).execute();
+    }
+
+    class SettingsAlert extends AlertDialog{
+
+        protected SettingsAlert(Context context) {
+            super(context);
+
+        }
     }
 
 

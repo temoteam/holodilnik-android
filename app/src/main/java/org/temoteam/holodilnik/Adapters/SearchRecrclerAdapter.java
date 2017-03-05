@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,8 +83,7 @@ public class SearchRecrclerAdapter extends RecyclerView.Adapter<SearchRecrclerAd
                     cw.setBackgroundColor(Color.parseColor("#E9FDCF"));
                 else
                     cw.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                if (reqText.length()>0)
-                selectedText.setText(reqText.substring(0,reqText.length()-2));
+                selectedText.setText(reqText);
             }
 
             @Override
@@ -94,8 +94,9 @@ public class SearchRecrclerAdapter extends RecyclerView.Adapter<SearchRecrclerAd
                 }
                 else {
                     reqId=reqId.replaceAll(id+",","");
-                    reqText=reqText.replaceAll(text+", ","");
+                    reqText=reqText.replaceAll((text+", "),"");
                 }
+                Log.i("testing",reqId+" "+reqText);
                 init();
             }
 
@@ -106,7 +107,9 @@ public class SearchRecrclerAdapter extends RecyclerView.Adapter<SearchRecrclerAd
         }
 
         holder.title.setText(titles.get(position));
-        holder.cardView.setOnClickListener(new MyOnClicler(ids.get(position),titles.get(position),holder.cardView));
+        MyOnClicler mocl = new MyOnClicler(ids.get(position),titles.get(position),holder.cardView);
+        mocl.init();
+        holder.cardView.setOnClickListener(mocl);
         Loader.loadIMG(ids.get(position),titles.get(position),holder.pic,activity);
         //
 

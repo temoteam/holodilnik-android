@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ public class SearchFragment extends Fragment implements TextWatcher {
 
     TextView selected;
     EditText search;
+    CardView cw;
     RecyclerView recyclerView;
     Loader loader;
 
@@ -80,6 +83,34 @@ public class SearchFragment extends Fragment implements TextWatcher {
                 recipesFragment.dataUpdate(SearchRecrclerAdapter.reqId,"id","likes","true");
                 transaction.replace(R.id.content_main, recipesFragment).commit();
 
+            }
+        });
+
+        cw = (CardView) (result.findViewById(R.id.cardview2));
+
+        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0) {
+                    cw.setAlpha(0);
+                } else {
+                    cw.setAlpha(1);
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (newState == AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
+                    // Do something
+                } else if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                    // Do something
+                } else {
+                    // Do something
+                }
             }
         });
         return result;
