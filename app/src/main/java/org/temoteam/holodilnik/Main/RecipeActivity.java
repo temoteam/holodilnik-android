@@ -110,7 +110,7 @@ public class RecipeActivity extends AppCompatActivity {
                     int c = temp.indexOf("|");
                     if (c>0){
                     steps.add(temp.substring(0,c));
-                    links.add(temp.substring(c+1));}
+                    links.add(temp.substring(c+1).replaceAll("lohness.com","shvedcom.esy.es"));}
                 }
 
             }
