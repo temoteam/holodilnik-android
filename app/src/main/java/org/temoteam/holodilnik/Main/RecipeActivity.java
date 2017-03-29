@@ -87,7 +87,7 @@ public class RecipeActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             try{
-                String myURL = "http://lohness.com/hlad/recipe_get.php?id="+id;
+                String myURL = "http://shvedcom.esy.es/hlad/recipe_get.php?id="+id;
                 URL url = new URL(myURL);
 
                 Scanner in = new Scanner(url.openConnection().getInputStream());
@@ -102,7 +102,7 @@ public class RecipeActivity extends AppCompatActivity {
                 steps = new ArrayList<String>();
                 links = new ArrayList<String>();
 
-                myURL = "http://lohness.com/hlad/steps/"+id;
+                myURL = "http://shvedcom.esy.es/hlad/steps/"+id;
                 url = new URL(myURL);
                 in = new Scanner(url.openConnection().getInputStream());
                 while (in.hasNextLine()){
@@ -126,7 +126,7 @@ public class RecipeActivity extends AppCompatActivity {
             recipeActivity.ingradients.setText(ingradients);
             recipeActivity.likes.setText(likes);
             recipeActivity.time.setText(time);
-            Picasso.with(recipeActivity).load("http://lohness.com/hlad/photo/recipe_"+id+".png").error(R.drawable.loading).into(image);
+            Picasso.with(recipeActivity).load("http://shvedcom.esy.es/hlad/photo/recipe_"+id+".png").error(R.drawable.loading).into(image);
         }
 
         @Override

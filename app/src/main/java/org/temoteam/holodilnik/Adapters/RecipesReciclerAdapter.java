@@ -79,7 +79,7 @@ public class RecipesReciclerAdapter extends RecyclerView.Adapter<RecipesRecicler
         holder.time.setText(time.get(position));
         holder.likes.setText(likes.get(position));
         holder.cardView.setOnClickListener(new MyOnClicler(ids.get(position),titles.get(position),holder.cardView));
-        Picasso.with(activity).load("http://lohness.com/hlad/photo/recipe_"+ids.get(position)+".png").error(R.drawable.loading).into(holder.pic);
+        Picasso.with(activity).load("http://shvedcom.esy.es/hlad/photo/recipe_"+ids.get(position)+".png").error(R.drawable.loading).into(holder.pic);
     }
 
     @Override

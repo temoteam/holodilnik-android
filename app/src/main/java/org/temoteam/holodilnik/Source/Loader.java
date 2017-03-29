@@ -72,7 +72,7 @@ public class Loader {
             }
         }
 
-        Picasso.with(activity).load("http://lohness.com/hlad/photo/food_"+id+".png").error(R.drawable.loading).into(to, new Getter(id,title,to,activity));
+        Picasso.with(activity).load("http://shvedcom.esy.es/hlad/photo/food_"+id+".png").error(R.drawable.loading).into(to, new Getter(id,title,to,activity));
 
 
     }
@@ -104,7 +104,7 @@ public class Loader {
         @Override
         protected Boolean doInBackground(Void... params) {
             try {
-                String myURL = "http://lohness.com/hlad/recipe_prediction.php";
+                String myURL = "http://shvedcom.esy.es/hlad/recipe_prediction.php";
                 String parms = "q=" + q + "&sort=" + sort + "&desc=" + desc + "&type=" + type;
                 byte[] data = null;
                 URL url = new URL(myURL);
@@ -298,7 +298,7 @@ public class Loader {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                URL conn = new URL("http://lohness.com/hlad/data_add.php?id="+id+"&title="+URLEncoder.encode(title, "UTF-8")+"&url="+url);
+                URL conn = new URL("http://shvedcom.esy.es/hlad/data_add.php?id="+id+"&title="+URLEncoder.encode(title, "UTF-8")+"&url="+url);
                 System.out.println(conn.toString());
                 conn.openConnection().getInputStream();
             } catch (MalformedURLException e) {
